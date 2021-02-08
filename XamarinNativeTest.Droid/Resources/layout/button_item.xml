@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout android:gravity="bottom" 
+    android:layout_height="50dp" 
+    android:layout_width="match_parent" 
+    android:orientation="vertical" 
+    xmlns:local="http://schemas.android.com/apk/res-auto" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<TextView android:gravity="center" 
+        android:layout_height="wrap_content" 
+        android:layout_width="wrap_content" 
+        android:layout_gravity="center"
+        android:textSize="30dp"
+        local:MvxBind="Text Name"/>
+<TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_gravity="bottom"
+        local:MvxBind="BackgroundColor Color, Converter=NativeColor; Visible IsVis"
+   />
+</LinearLayout>

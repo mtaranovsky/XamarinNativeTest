@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+          android:versionCode="1" 
+          android:versionName="1.0" 
+          package="com.companyname.XamarinNativeTest.droid">
+  <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="28" />
+  <application android:allowBackup="true" android:icon="@drawable/Icon" android:label="XamarinNativeTest" android:roundIcon="@drawable/Icon" android:supportsRtl="true" android:theme="@style/AppTheme" >
+  </application>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+</manifest>
