@@ -42,8 +42,8 @@ namespace XamarinNativeTest.Core.Services
                 if (ConvertJsonToList() != null)
                     list = ConvertJsonToList();
                 if (list.Count>0)
-                    list.Add(new TicketModel() {Id = list[list.Count-1].Id + 1, ProblemName = ticket.ProblemName, ColorARGB = ticket.ColorARGB });
-                else list.Add(new TicketModel() { Id = 1, ProblemName = ticket.ProblemName, ColorARGB = ticket.ColorARGB});
+                    list.Add(new TicketModel(list[list.Count - 1].Id + 1, ticket.ProblemName, ticket.ColorARGB));
+                else list.Add(new TicketModel(1, ticket.ProblemName, ticket.ColorARGB));
 
                 var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented);
                 using (StreamWriter outputFile = new StreamWriter(JsonLocation()))
