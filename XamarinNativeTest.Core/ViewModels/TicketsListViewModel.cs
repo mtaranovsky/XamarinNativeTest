@@ -31,15 +31,8 @@ namespace XamarinNativeTest.Core.ViewModels
 
         public void ReloadTickets()
         {
-            if (_ticketService.ConvertJsonToList() != null)
-            {
-                var list = _ticketService.ConvertJsonToList();
-                foreach (var l in list)
-                {
-                    l.Color = new MvxColor(l.ColorARGB);
-                }
-                TicketsList = list;
-            }
+            var list = _ticketService.GetAllTickets();
+            TicketsList = list;
          }
 
         public List<TicketModel> TicketsList
@@ -69,16 +62,7 @@ namespace XamarinNativeTest.Core.ViewModels
 
         private void SearchItems(string searchSymbols)
         {
-            if (_ticketService.GetFiltredList(searchSymbols) != null)
-            {
-                var list = _ticketService.GetFiltredList(searchSymbols);
-                foreach (var l in list)
-                {
-                    l.Color = new MvxColor(l.ColorARGB);
-                }
-                TicketsList = list;
-            }
-            else TicketsList = null;
+            TicketsList = _ticketService.GetFiltredList(searchSymbols);
         }
 
 

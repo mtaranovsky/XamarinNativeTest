@@ -6,6 +6,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using MvvmCross.Droid.Views;
+using MvvmCross.Droid.Views.Attributes;
 //using MvvmCross.Plugins.Color.Droid;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ using XamarinNativeTest.Core.ViewModels;
 
 namespace XamarinNativeTest.Droid.Views
 {
+    [MvxActivityPresentation]
     [Activity(Label = "NewTicketView")]
     public class NewTicketView : MvxActivity<NewTicketViewModel>
     {

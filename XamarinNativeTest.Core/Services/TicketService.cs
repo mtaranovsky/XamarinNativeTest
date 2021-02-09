@@ -2,75 +2,77 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq;
 
 namespace XamarinNativeTest.Core.Services
 {
     class TicketService : ITicketService
     {
-        private readonly string _ticketsJsonFolder;
-
+        private readonly ITicketJsonLoccationServices _jsonLocationServices;
+        private readonly string _jsonLocation;
+        private List<TicketModel> AllTickets;
         public TicketService(ITicketJsonLoccationServices service)
         {
-            _ticketsJsonFolder = service.GetJsonFolder();
+            _jsonLocationServices = service;
+            _jsonLocation = JsonLocation();
+            AllTickets = ConvertJsonToList();
+
         }
+        public List<TicketModel> GetAllTickets()
+        {
+            return AllTickets;
+        }
+
         public List<TicketModel> ConvertJsonToList()
         {
             try
             {
-                string JsonString = "";
-                if (!File.Exists(JsonLocation()))
-                    using (FileStream fileStream = File.Create(JsonLocation()));
-                using (StreamReader streamReader = File.OpenText(JsonLocation()))
+                var list = new List<TicketModel>();
+                if (!File.Exists(_jsonLocation)) using (File.Create(_jsonLocation));
+                using (StreamReader streamReader = File.OpenText(_jsonLocation))
                 {
-                    JsonString = streamReader.ReadToEnd();
+                    list = JsonConvert.DeserializeObject<List<TicketModel>>(streamReader.ReadToEnd()) ?? new List<TicketModel>();
                 }
-                var list = JsonConvert.DeserializeObject<List<TicketModel>>(JsonString);
                 return list;
             }
             catch(Exception ex)
             {
-                return null;
+                return new List<TicketModel>();
             }
-            
         }
         public void AddTicketToJson(TicketModel ticket)
         {
             try
             {
-                var list = new List<TicketModel>();
-                if (ConvertJsonToList() != null)
-                    list = ConvertJsonToList();
-                if (list.Count>0)
-                    list.Add(new TicketModel(list[list.Count - 1].Id + 1, ticket.ProblemName, ticket.ColorARGB));
-                else list.Add(new TicketModel(1, ticket.ProblemName, ticket.ColorARGB));
-
-                var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented);
-                using (StreamWriter outputFile = new StreamWriter(JsonLocation()))
-                {
-                    outputFile.Write(convertedJson);
-                }
+                //var id = 1;
+                //if (AllTickets.LastOrDefault() != null)
+                //    id = AllTickets.Last().Id + 1;
+                var id = AllTickets?.LastOrDefault()?.Id + 1 ?? 1;
+                AllTickets.Add(new TicketModel(id, ticket.ProblemName, ticket.TicketPriority));
+                Save();
             }
             catch(Exception ex)
             {
 
             }
         }
+
+        private void Save()
+        {
+            var convertedJson = JsonConvert.SerializeObject(AllTickets, Formatting.Indented);
+            using (StreamWriter outputFile = new StreamWriter(_jsonLocation))
+            {
+                outputFile.Write(convertedJson);
+            }
+        }
         public string JsonLocation()
         {
-            var a = Path.Combine(_ticketsJsonFolder, Constants.JsonName);
-            return a;
+            return Path.Combine(_jsonLocationServices.GetJsonFolder(), Constants.JsonName); ;
         }
 
         public List<TicketModel> GetFiltredList(string searchTitle)
         {
-            var list = new List<TicketModel>();
-            if (ConvertJsonToList() != null)
-            {
-                list = ConvertJsonToList();
-                list = list.FindAll(m => m.ProblemName.Contains(searchTitle));
-            }
-            return list;
+            return AllTickets.FindAll(m => m.ProblemName.Contains(searchTitle));
         }
         
     }

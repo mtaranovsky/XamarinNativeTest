@@ -7,9 +7,8 @@ namespace XamarinNativeTest.Core.Services
 {
     public interface ITicketService
     {
-        List<TicketModel> ConvertJsonToList();
+        List<TicketModel> GetAllTickets();
         void AddTicketToJson(TicketModel ticketModel);
-        string JsonLocation();
         List<TicketModel> GetFiltredList(string searchTitle);
     }
 }

@@ -6,16 +6,15 @@ namespace XamarinNativeTest.Core.Services
     {
         public int Id { get; set; }
         public string ProblemName { get; set; }
-        public MvxColor Color { get; set; }
-        public int ColorARGB { get; set; }
+        public Enums.TicketPriority TicketPriority { get; set; }
 
         public TicketModel() { }
 
-        public TicketModel(int id, string problem, int argb)
+        public TicketModel(int id, string problem, Enums.TicketPriority ticketPriority)
         {
             Id = id;
             ProblemName = problem;
-            ColorARGB = argb;
+            TicketPriority = ticketPriority;
         } 
     }
 }

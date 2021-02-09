@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using XamarinNativeTest.Core.Models;
 using XamarinNativeTest.Core.Services;
+using static XamarinNativeTest.Core.Enums;
 
 namespace XamarinNativeTest.Core.ViewModels
 {
@@ -15,9 +16,10 @@ namespace XamarinNativeTest.Core.ViewModels
     {
         private readonly ITicketService _ticketService;
         public List<PriorityButtonModel> priorityList = new List<PriorityButtonModel>() {
-            new PriorityButtonModel() { Name= "Low", Color = new MvxColor(121, 196, 69) },
-            new PriorityButtonModel(){Name = "Medium", Color =new MvxColor(247, 148, 22)},
-            new PriorityButtonModel(){Name = "Top", Color = new MvxColor(255, 0, 0)}};
+            new PriorityButtonModel(TicketPriority.Low),
+            new PriorityButtonModel(TicketPriority.Medium),
+            new PriorityButtonModel(TicketPriority.Top) 
+        };
 
 
         public NewTicketViewModel(ITicketService ticketService)
@@ -55,6 +57,7 @@ namespace XamarinNativeTest.Core.ViewModels
             {
                 return _buttonClickedCommand = _buttonClickedCommand ??
                     new MvxCommand<PriorityButtonModel>(button => {
+
                         Buttons.ForEach(m => m.IsVis = false);
                         button.IsVis = true;
             }       );
@@ -66,7 +69,7 @@ namespace XamarinNativeTest.Core.ViewModels
         {
             if (!string.IsNullOrEmpty(ProblemName) && Buttons.Count(m => m.IsVis == true) == 1)
             {
-                var ticket = new TicketModel() { ProblemName = ProblemName, Color = Buttons.FirstOrDefault(m => m.IsVis).Color, ColorARGB = Buttons.FirstOrDefault(m => m.IsVis).Color.ARGB };
+                var ticket = new TicketModel() { ProblemName = ProblemName, TicketPriority = Buttons.FirstOrDefault(m => m.IsVis).TicketPriority};
                 _ticketService.AddTicketToJson(ticket);
                 Close(this);
             }
