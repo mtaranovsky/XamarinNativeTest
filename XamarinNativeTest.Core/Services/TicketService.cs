@@ -1,8 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Acr.UserDialogs;
+using MvvmCross.Platform;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace XamarinNativeTest.Core.Services
 {
@@ -20,7 +23,7 @@ namespace XamarinNativeTest.Core.Services
         }
         public List<TicketModel> GetAllTickets()
         {
-            return AllTickets;
+            return AllTickets.ToList();
         }
 
         public List<TicketModel> ConvertJsonToList()
@@ -37,6 +40,7 @@ namespace XamarinNativeTest.Core.Services
             }
             catch(Exception ex)
             {
+                Mvx.Resolve<IUserDialogs>().Alert("Something went wrong");
                 return new List<TicketModel>();
             }
         }
@@ -44,16 +48,12 @@ namespace XamarinNativeTest.Core.Services
         {
             try
             {
-                //var id = 1;
-                //if (AllTickets.LastOrDefault() != null)
-                //    id = AllTickets.Last().Id + 1;
-                var id = AllTickets?.LastOrDefault()?.Id + 1 ?? 1;
-                AllTickets.Add(new TicketModel(id, ticket.ProblemName, ticket.TicketPriority));
+                AllTickets.Add(new TicketModel(AllTickets?.Count() + 1 ?? 1, ticket.ProblemName, ticket.TicketPriority));
                 Save();
             }
             catch(Exception ex)
             {
-
+                Mvx.Resolve<IUserDialogs>().Alert("Something went wrong");
             }
         }
 

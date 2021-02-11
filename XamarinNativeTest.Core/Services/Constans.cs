@@ -6,7 +6,7 @@ namespace XamarinNativeTest.Core.Services
 {
     public static class Constants
     {
-        public const string JsonName = "ProblemTest123.json";
+        public const string JsonName = "TicketsTest.json";
     }
 }
 

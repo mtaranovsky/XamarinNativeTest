@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using Acr.UserDialogs;
+using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -18,6 +19,7 @@ namespace XamarinNativeTest.Droid.Views
             var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             SetActionBar(toolbar);
             ActionBar.Title = "Tickets List";
+            UserDialogs.Init(this);
         }
         public override bool OnCreateOptionsMenu(IMenu menu)
         {

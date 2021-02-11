@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using Acr.UserDialogs;
+using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
@@ -28,6 +29,7 @@ namespace XamarinNativeTest.Droid.Views
             SetActionBar(toolbar);
             
             ActionBar.Title = "Add Ticket";
+            UserDialogs.Init(this);
         }
         public override bool OnCreateOptionsMenu(IMenu menu)
         {

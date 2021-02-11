@@ -1,4 +1,6 @@
-﻿using MvvmCross.Core.ViewModels;
+﻿using Acr.UserDialogs;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
 using XamarinNativeTest.Core.ViewModels;
 
@@ -13,6 +15,7 @@ namespace XamarinNativeTest.Core
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
             RegisterNavigationServiceAppStart<TicketsListViewModel>();
+            Mvx.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
         }
     }
 }
